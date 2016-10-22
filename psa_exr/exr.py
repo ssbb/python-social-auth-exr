@@ -10,8 +10,6 @@ class EXROAuth2(BaseOAuth2):
     ID_KEY = 'id'
     ACCESS_TOKEN_METHOD = 'POST'
 
-    DEFAULT_URL = 'https://accounts.exr.cloud'
-
     AUTHORIZATION_URL = urljoin(
         settings.SOCIAL_AUTH_EXR_BASE_URL, '/oauth/authorize/')
     ACCESS_TOKEN_URL = urljoin(
@@ -24,6 +22,5 @@ class EXROAuth2(BaseOAuth2):
                 if k in ['username', 'email', 'first_name', 'last_name']}
 
     def user_data(self, access_token, *args, **kwargs):
-        url = urljoin(self.setting('BASE_URL', self.DEFAULT_URL),
-                      '/api/users/me/')
+        url = urljoin(self.setting('BASE_URL'), '/api/users/me/')
         return self.get_json(url, params={'access_token': access_token})
